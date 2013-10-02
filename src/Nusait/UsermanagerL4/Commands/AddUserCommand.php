@@ -38,7 +38,7 @@ class AddUserCommand extends BaseUserManagerCommand {
 
 		if ($this->option('role') != '') {
 			$roleName = $this->option('role');
-			$roleRelationshipMethodName = str_plural(strtolower($this->config['roleModelName']));
+			$roleRelationshipMethodName = $this->getRoleRelationshipName();
 			$roleId = $roleModel->getRoleIdWithName($roleName);
 		}
 

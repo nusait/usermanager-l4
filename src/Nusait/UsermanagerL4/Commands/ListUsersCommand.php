@@ -31,15 +31,19 @@ class ListUsersCommand extends BaseUserManagerCommand {
 
 	public function fire() {
 		$userModel = $this->getUserModel();
+		$userColumnName = $this->config['userColumn']; // default is netid
+		$roleRelationship = $this->getRoleRelationshipName(); //default is roles
+		$roleColumnName = $this->config['roleColumn']; // default is name
+
 		$allUsers = $userModel->getAllUsersWithRoles();
 		$output = '';
-		$allUsers->each(function ($user) use ($output) {
-			$netid = $user->netid;
+		$allUsers->each(function ($user) use ($output, $userColumnName, $roleRelationship, $roleColumnName) {
+			$netid = $user->$userColumnName;
 			$output .= $netid . " ";
-			if ($user->roles->isEmpty()) {
-				$output .= "(has no roles)";
+			if ($user->$roleRelationship->isEmpty()) {
+				$output .= "(has no $roleRelationship)";
 			} else {
-				$output .= $user->roles->fetch('name');
+				$output .= $user->$roleRelationship->fetch($roleColumnName);
 			}
 			$this->info($output);
 			$output = '';

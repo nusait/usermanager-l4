@@ -24,8 +24,20 @@ trait UserManagerUserRelatable {
     }
     
     protected function searchLdapWithNetid($netid) {
+        // Production
         $ldap = new NuLdap(\Config::get('usermanager-l4::ldap.rdn'), \Config::get('usermanager-l4::ldap.password'));
         $metadata = $ldap->searchNetid($netid);
+        
+        /*
+        For local development, no need to test ldap stuff so comment the previous two lines
+        because I made that package, and it's FLAWLESS!!!
+
+        $metadata = [
+            'givenname' => ['Steve'],
+            'sn' => ['Wussup'],
+            'mail' => ['awesome@awesome.com']
+        ];
+        */
 
         $result[$this->getFirstNameColString()] = $metadata['givenname'][0];
         $result[$this->getLastNameColString()] = $metadata['sn'][0];

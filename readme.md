@@ -1,5 +1,11 @@
 UserManager Artisan Command Package
 -------------------------------------------
+# Available Commands
+```
+usermanager:adduser
+usermanager:listusers
+```
+
 ## To Install
 
 1. Include the following in your composer.json
@@ -45,6 +51,7 @@ class Role extends Eloquent {
 ## To Use
 
 Run (on production server)
+Example:
 
 ```
 php artisan usermanager:adduser netid --role="admin"

@@ -26,4 +26,8 @@ class BaseUserManagerCommand extends Command {
 		$roleModelName = $this->config['roleModelName'];
 		return new $roleModelName();
 	}
+
+	protected function getRoleRelationshipName() {
+		return str_plural(strtolower($this->config['roleModelName']));
+	}
 }
