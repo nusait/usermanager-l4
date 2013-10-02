@@ -1,12 +1,12 @@
 UserManager Artisan Command Package
 -------------------------------------------
-# Available Commands
+## Available Commands
 ```
 usermanager:adduser
 usermanager:listusers
 ```
 
-## To Install
+### To Install
 
 1. Include the following in your composer.json
 ```
@@ -48,7 +48,7 @@ class Role extends Eloquent {
  ...
 ```
 
-## To Use
+### To Use
 
 Run (on production server)
 Example:
