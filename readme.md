@@ -10,7 +10,7 @@ usermanager:listusers
 
 1. Include the following in your composer.json
 ```
-"nusait\usermanager-l4" : "*"
+"nusait/usermanager-l4" : "*"
 ```
 
 2. Run
