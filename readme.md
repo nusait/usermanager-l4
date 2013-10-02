@@ -30,7 +30,7 @@ php artisan config:publish nusait/usermanager-l4
 ```php
  ... 
 class User extends Eloquent implements UserInterface, RemindableInterface {
-	use Nusait\UsermanagerL4\Traits\UserManagerRoleRelatable;
+	use Nusait\UsermanagerL4\Traits\UserManagerUserRelatable;
  ...
 ```
 
