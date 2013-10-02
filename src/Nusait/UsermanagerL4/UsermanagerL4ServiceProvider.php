@@ -21,15 +21,23 @@ class UsermanagerL4ServiceProvider extends ServiceProvider {
 		$this->package('nusait/usermanager-l4');
 
 		$this->registerAddUserCommand();
-		
+		$this->registerListUsersCommand();
+
 		$this->commands(
-			'usermanager.adduser'
+			'usermanager.adduser',
+			'usermanager.listusers'
 		);
 	}
 	protected function registerAddUserCommand() {
 		$this->app['usermanager.adduser'] = $this->app->share(function ($app) {
 			$config = $app['config']->get('usermanager-l4::database');
 		   	return new Commands\AddUserCommand($config);
+		});
+	}
+	protected function registerListUsersCommand() {
+		$this->app['usermanager.listusers'] = $this->app->share(function ($app) {
+			$config = $app['config']->get('usermanager-l4::database');
+		   	return new Commands\ListUsersCommand($config);
 		});
 	}
 	/**

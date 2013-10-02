@@ -30,19 +30,28 @@ class AddUserCommand extends BaseUserManagerCommand {
 	}
 
 	public function fire() {
-		$user = $this->getUserModel();
-		$user = $user->addUserByNetid($this->argument('netid'));
-		$this->info($user->first_name . " " . $user->last_name . " has been added.");
-	}
+		$userModel = $this->getUserModel();
+		$roleModel = $this->getRoleModel();
+		$netid = $this->argument('netid');
 
-	protected function getUserModel() {
-		$userModelName = $this->config['userModelName'];
-		return new $userModelName();
-	}
+		$userModel->checkForUniqueNetid($netid);
 
-	protected function getRoleModel() {
-		$roleModelName = $this->config['roleModelName'];
-		return new $roleModelName();
+		if ($this->option('role') != '') {
+			$roleName = $this->option('role');
+			$roleRelationshipMethodName = str_plural(strtolower($this->config['roleModelName']));
+			$roleId = $roleModel->getRoleIdWithName($roleName);
+		}
+
+		
+		$user = $userModel->addUserByNetid($netid);
+		if ($this->option('role') != '') {
+			$user->$roleRelationshipMethodName()->attach($roleId);
+		}
+
+		$this->info($user->first_name . " " . $user->last_name . " has been added");
+		if ($this->option('role') != '') {
+			$this->info("with role of '$roleName'");
+		}
 	}
 
 	/**

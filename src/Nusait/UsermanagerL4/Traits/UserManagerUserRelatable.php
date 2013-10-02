@@ -2,17 +2,25 @@
 use Nusait\Nuldap\NuLdap;
 
 trait UserManagerUserRelatable {
+
 	protected function getFirstNameColString() {
 		return \Config::get('usermanager-l4::database.firstNameColumn');
 	}
+
     protected function getLastNameColString() {
         return \Config::get('usermanager-l4::database.lastNameColumn');
     }
+
     protected function getEmailColString() {
         return \Config::get('usermanager-l4::database.emailColumn');
     }
+
     protected function getUserColString() {
         return \Config::get('usermanager-l4::database.userColumn');
+    }
+
+    protected function getRoleRelationshipName() {
+        return str_plural(strtolower(\Config::get('usermanager-l4::database.roleModelName')));
     }
     
     protected function searchLdapWithNetid($netid) {
@@ -25,12 +33,13 @@ trait UserManagerUserRelatable {
 
         return $result;
     }
-
-    public function addUserByNetid($netid) {
-        if ( ! $this->where($this->getUserColString(), $netid)->get()->empty()) {
+    public function checkForUniqueNetid($netid) {
+        if ( ! $this->where($this->getUserColString(), $netid)->get()->isEmpty()) {
             throw new \Exception("User with '$netid' already exists in your users table", 1);
         }
-
+        return true;
+    }
+    public function addUserByNetid($netid) {
         $firstNameCol = $this->getFirstNameColString();
         $lastNameCol = $this->getLastNameColString();
         $emailCol = $this->getEmailColString();
@@ -46,5 +55,8 @@ trait UserManagerUserRelatable {
         $user->save();
 
         return $user;
+    }
+    public function getAllUsersWithRoles() {
+        return $this->with($this->getRoleRelationshipName())->get();
     }
 }
