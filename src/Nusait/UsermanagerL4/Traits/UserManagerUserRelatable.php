@@ -1,33 +1,34 @@
 <?php namespace Nusait\UsermanagerL4\Traits;
 use Nusait\Nuldap\NuLdap;
+use \Config;
 
 trait UserManagerUserRelatable {
 
 	protected function getFirstNameColString() {
-		return \Config::get('usermanager-l4::database.firstNameColumn');
+		return Config::get('usermanager-l4::database.firstNameColumn');
 	}
 
     protected function getLastNameColString() {
-        return \Config::get('usermanager-l4::database.lastNameColumn');
+        return Config::get('usermanager-l4::database.lastNameColumn');
     }
 
     protected function getEmailColString() {
-        return \Config::get('usermanager-l4::database.emailColumn');
+        return Config::get('usermanager-l4::database.emailColumn');
     }
 
     protected function getUserColString() {
-        return \Config::get('usermanager-l4::database.userColumn');
+        return Config::get('usermanager-l4::database.userColumn');
     }
 
     protected function getRoleRelationshipName() {
-        return str_plural(strtolower(\Config::get('usermanager-l4::database.roleModelName')));
+        return str_plural(strtolower(Config::get('usermanager-l4::database.roleModelName')));
     }
-    
+
     protected function searchLdapWithNetid($netid) {
         // Production
-        $ldap = new NuLdap(\Config::get('usermanager-l4::ldap.rdn'), \Config::get('usermanager-l4::ldap.password'));
+        $ldap = new NuLdap(Config::get('ldap.rdn'), Config::get('ldap.password'));
         $metadata = $ldap->searchNetid($netid);
-        
+
         /*
         For local development, no need to test ldap stuff so comment the previous two lines
         because I made that package, and it's FLAWLESS!!!
