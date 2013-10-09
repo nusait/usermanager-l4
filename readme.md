@@ -28,13 +28,20 @@ composer update
 php artisan config:publish nusait/usermanager-l4
 ```
 
-5. Navigate to package configuration and Change the ldap configuration
+5. If you don't have a ldap.php in your ```app/config``` folder, Create one with the following:
+```php
+<?php
+	return array(
+		'rdn' => 'your rdn string',
+		'password' => 'your password'
+	);
+```
 
 6. Include Traits in your User and Role models
 
 (User Model)
 ```php
- ... 
+ ...
 class User extends Eloquent implements UserInterface, RemindableInterface {
 	use Nusait\UsermanagerL4\Traits\UserManagerUserRelatable;
  ...
@@ -42,7 +49,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 (Role Model)
 ```php
- ... 
+ ...
 class Role extends Eloquent {
 	use Nusait\UsermanagerL4\Traits\UserManagerRoleRelatable;
  ...
