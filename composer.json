@@ -2,6 +2,7 @@
     "name": "nusait/usermanager-l4",
     "description": "",
     "keywords": ["laravel", "artisan", "user-management", "ldap"],
+    "version": "1.0.0",
     "authors": [
         {
             "name": "Hao Luo",
